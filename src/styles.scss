@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+@import "~ngx-toastr/toastr";
+
+body {
+  background:#333 url(/assets/img/body-bg.png) repeat;
+  font-family: 'PT Sans Caption', sans-serif;
+  color: #fff;
+}
+
+
+/**
+margins and paddings
+ */
+$spaceamounts: (1, 2, 3, 4, 5);
+$sides: (top, bottom, left, right);
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space*10}px !important;
+    }
+
+    .p#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space*10}px !important;
+    }
+  }
+
+  .m-#{$space} {
+    margin: #{$space*10}px;
+  }
+
+  .p-#{$space} {
+    padding: #{$space*10}px;
+  }
+}

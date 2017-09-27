@@ -1,0 +1,20 @@
+<div class="row h-100 justify-content-center">
+  <div class="col-xs-4 my-auto ">
+    <div class="signup-form">
+      <div *ngIf="error" class="text-center text-danger">
+        {{error}}
+      </div>
+      <form [formGroup]="signupForm">
+        <fieldset>
+          <div class="form-group">
+            <label for="email">Ваш Email</label>
+            <input type="text" id="email" name="email" class="form-control" placeholder="Email" formControlName="email">
+          </div>
+          <div class="text-center form-group">
+            <button type="submit" class="btn btn-primary" (click)="sendToken()">Отправить токен</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
