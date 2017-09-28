@@ -17,7 +17,7 @@ export class WordsHttpService extends Http {
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
     return super.request(url, options).catch((e) => {
       if (e.status === 401) {
-        window.location.href = '/login';
+        this.router.navigate(['/signin']);
       }
 
       if (e.status === 500) {

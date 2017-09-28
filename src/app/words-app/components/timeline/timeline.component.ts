@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Timeline} from "../../models/timeline";
+import {TimelineService} from "../../services/timeline.service";
 
 declare var moment: any;
 
@@ -16,10 +17,12 @@ export class TimelineComponent implements OnInit {
   @Input() month: string;
   @Input() monthString: string;
 
-  constructor() { }
+  constructor(
+    private timelineService: TimelineService
+  ) { }
 
   ngOnInit() {
-    this.currentMonth = moment().format('MM.YYYY')
+    this.currentMonth = moment().format('MM.YYYY');
   }
 
   nextMonth() {

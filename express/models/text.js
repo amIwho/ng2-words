@@ -1,9 +1,15 @@
+"use strict";
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const textSchema = new Schema({
   text: String,
   date: Date,
+  words: Number,
+  user: {
+    type: Schema.ObjectId,
+    ref: 'User'
+  },
   created_at: {
     type: Date,
     "default": Date.now
@@ -12,7 +18,6 @@ const textSchema = new Schema({
 });
 
 textSchema.pre('save', (next) => {
-  "use strict";
   const curDate = new Date();
   this.updated_at = curDate;
   if (!this.created_at) {

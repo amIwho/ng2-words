@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs/Observable";
 import {Timeline} from "../models/timeline";
+import {WordsHttpService} from "./words-http.service";
 
 @Injectable()
 export class TimelineService {
 
-  constructor() { }
+  constructor(
+    private http: WordsHttpService
+  ) { }
 
-  getTimelineData(month): Observable<Timeline> {
-    return Observable.of({
-      days: [
-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,'--','--','--','--','--','--','--','--','--'
-        ],
-      month: '09.2017'
-    });
+  getTimelineData(month) {
+    return this.http.get('/api/timeline/'+ month).map(res => res.json());
   }
-
 }

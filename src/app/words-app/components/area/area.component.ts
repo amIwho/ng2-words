@@ -41,8 +41,10 @@ export class AreaComponent implements OnInit {
     this.initForm();
 
     this.currentDate = moment().format('DD.MM.YYYY');
+
     this.textService.getTextByDate(this.date).subscribe((text) => {
-      this.textForm.get('text').patchValue(text, {emitEvent: false});
+      this.textForm.get('text').patchValue(text[0].text, {emitEvent: false});
+      setInterval(() => {this.save()}, 10000)
     })
   }
 
@@ -62,6 +64,20 @@ export class AreaComponent implements OnInit {
     return this.textForm.get('text').value
   }
 
+  save() {
+    if (this.getText()) {
+      this.state = this.STATES.saving;
+      this.textService.saveText(this.getText()).subscribe((res) => {
+        if (res.json().ok === 1) {
+          this.state = this.STATES.saved;
+        }
+      }, (err) => {
+        this.state = this.STATES.notsaved;
+        this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!')
+      })
+    }
+  }
+
   saveByKeys(e) {
     e.preventDefault();
     e.stopPropagation();
@@ -69,7 +85,7 @@ export class AreaComponent implements OnInit {
     if (this.getText()) {
       this.state = this.STATES.saving;
       this.textService.saveText(this.getText()).subscribe((res) => {
-        if (res.json().message === 'OK') {
+        if (res.json().ok === 1) {
           this.state = this.STATES.saved;
           this.toastr.success('Сохранение прошло успешно!', 'Продолжайте!')
         }
@@ -78,11 +94,14 @@ export class AreaComponent implements OnInit {
         this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!')
       })
     }
-
   }
 
   putTab(e) {
-
+    e.preventDefault();
+    const start = e.target.selectionStart;
+    const end = e.target.selectionEnd;
+    this.textForm.get('text').setValue(this.getText().substring(0, start) + '\t' + this.getText().substring(end));
+    return e.target.selectionStart = e.target.selectionEnd = start + 1;
   }
 
 

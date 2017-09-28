@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {TimelineService} from "../../services/timeline.service";
 import {Timeline} from "../../models/timeline";
@@ -13,10 +13,11 @@ export class WordsAppComponent implements OnInit {
   month: string;
   monthString: string;
   date: string;
-  timeline: Timeline;
+  timeline = [];
   currentDayNumber: number;
 
-  constructor(private timelineService: TimelineService) { }
+  constructor(private timelineService: TimelineService) {
+  }
 
   ngOnInit() {
     moment.locale('ru-RU');
@@ -25,12 +26,26 @@ export class WordsAppComponent implements OnInit {
     this.date = moment().format('DD.MM.YYYY');
     this.currentDayNumber = +moment().format('D');
 
+
     this.timelineService.getTimelineData(this.month).subscribe((timeline) => {
-      this.timeline = timeline;
+      const dayCount = moment(this.month, 'MM.YYYY').daysInMonth();
+      for (let i = 0; i < this.currentDayNumber; i++) {
+        this.timeline[i] = 0;
+      }
+
+
+      for (let i = this.currentDayNumber; i < dayCount; i++) {
+        this.timeline[i] = '--';
+      }
+
+      timeline.forEach((day) => {
+        const dayN = +moment(day.date, 'DD.MM.YYYY').format('D');
+        this.timeline[dayN-1] = day.words;
+      });
     });
   }
 
   updateTimeline(data) {
-    this.timeline.days[this.currentDayNumber] = data.wordsCount;
+    this.timeline[this.currentDayNumber - 1] = data.wordsCount;
   }
 }

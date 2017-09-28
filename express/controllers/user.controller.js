@@ -27,7 +27,6 @@ exports.signup = function (req, res) {
     });
   });
 };
-
 exports.signin = function (req, res, next) {
   passport.authenticate('local', function (err, user, info) {
     if (err || !user) {
@@ -46,14 +45,10 @@ exports.signin = function (req, res, next) {
     }
   })(req, res, next);
 };
-
-
 exports.signout = function (req, res) {
   req.logout();
   res.status(200).send('OK');
 };
-
-
 exports.me = function (req, res) {
   let safeUserObject = null;
   if (req.user) {
