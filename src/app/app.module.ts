@@ -26,6 +26,7 @@ import "rxjs/add/operator/debounceTime";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import "rxjs/add/operator/map";
+import {Autosize} from "./words-app/directives/autosize.directive";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import "rxjs/add/operator/map";
     AreaComponent,
     CapitalizePipe,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    Autosize
   ],
   imports: [
     BrowserModule,

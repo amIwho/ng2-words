@@ -65,7 +65,7 @@ export class AreaComponent implements OnInit {
   }
 
   save() {
-    if (this.getText()) {
+    if (this.state === this.STATES.notsaved && this.getText()) {
       this.state = this.STATES.saving;
       this.textService.saveText(this.getText()).subscribe((res) => {
         if (res.json().ok === 1) {
