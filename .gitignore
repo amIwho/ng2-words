@@ -34,4 +34,5 @@ testem.log
 Thumbs.db
 
 express/secrets.json
+express/node_modules
 express/db

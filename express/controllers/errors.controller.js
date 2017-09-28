@@ -15,9 +15,9 @@ function getUniqueErrorMessage(err) {
       begin = err.errmsg.lastIndexOf('index: ') + 7;
     }
     const fieldName = err.errmsg.substring(begin, err.errmsg.lastIndexOf('_1'));
-    output = fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' already exists';
+    output = 'Поле ' + fieldName.charAt(0).toUpperCase() + fieldName.slice(1) + ' с таким значением уже существует';
   } catch (ex) {
-    output = 'Unique field already exists';
+    output = 'Уникальное поле уже существует с таким значением';
   }
   return output;
 }

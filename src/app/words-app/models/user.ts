@@ -1,5 +1,5 @@
 export class User {
-  email: string;
   username: string;
-  fio: string;
+  provider: string;
+  created_at: string;
 }

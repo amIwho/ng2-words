@@ -15,18 +15,18 @@ owasp.config({
 });
 
 const validateLocalStrategyEmail = function (email) {
-  return ((this.provider !== 'local' && !this.updated) || validator.isEmail(email, { require_tld: false }));
+  return ((this.provider !== 'local' && !this.updated_at) || validator.isEmail(email, { require_tld: false }));
 };
 
 const userSchema = new Schema({
   username: {
     type: String,
     required: true,
-    unique: true,
+    unique: 'Пользователь уже существует',
     lowercase: true,
     trim: true,
     default: '',
-    validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
+    validate: [validateLocalStrategyEmail, 'Email не валидный']
   },
   password: { type: String, default: '' },
   salt: String,
@@ -60,17 +60,17 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-userSchema.pre('validate', function (next) {
-  if (this.provider === 'local' && this.password && this.isModified('password')) {
-    const result = owasp.test(this.password);
-    if (result.errors.length) {
-      const error = result.errors.join('');
-      this.invalidate('password', error);
-    }
-  }
-
-  next();
-});
+// userSchema.pre('validate', function (next) {
+//   // if (this.provider === 'local' && this.password && this.isModified('password')) {
+//   //   const result = owasp.test(this.password);
+//   //   if (result.errors.length) {
+//   //     const error = result.errors.join('\n');
+//   //     this.invalidate('password', error);
+//   //   }
+//   // }
+//
+//   next();
+// });
 
 userSchema.methods.hashPassword = function (password) {
   if (this.salt && password) {

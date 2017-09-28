@@ -1,6 +1,7 @@
 'use strict';
 
 const passport = require('passport');
+const validator = require('validator');
 
 const UserModel = require('../models/user');
 const errorHandler = require('./errors.controller');
@@ -49,7 +50,22 @@ exports.signin = function (req, res, next) {
 
 exports.signout = function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.status(200).send('OK');
+};
+
+
+exports.me = function (req, res) {
+  let safeUserObject = null;
+  if (req.user) {
+    safeUserObject = {
+      provider: validator.escape(req.user.provider),
+      username: validator.escape(req.user.username),
+      created_at: req.user.created_at.toString(),
+    };
+  }
+
+  res.json(safeUserObject || null);
+
 };
 
 

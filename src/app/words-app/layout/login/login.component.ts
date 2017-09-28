@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {UserService} from "../../services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'words-login',
@@ -12,7 +14,9 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private userService: UserService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -23,7 +27,11 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
+    this.userService.signin(this.loginForm.value).subscribe((user) => {
+      if (user._id) {
+        this.router.navigate(['/'])
+      }
+    });
   }
 
 }

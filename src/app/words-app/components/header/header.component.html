@@ -16,11 +16,23 @@
         <a class="nav-link" href="#">Описание</a>
       </li>
     </ul>
-    <ul class="navbar-nav">
+    <ul class="navbar-nav" *ngIf="!currentUser">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/sendToken">Получить токен для входа</a>
+        <a class="nav-link" routerLink="/signup">Зарегистрироваться</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/signin">Войти</a>
       </li>
     </ul>
+    <ul class="navbar-nav" *ngIf="currentUser">
+      <li class="nav-item">
+        <a class="nav-link" (click)="signout()" href="javascript:void(0);">{{currentUser.username}}</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="signout()" href="javascript:void(0);">Выйти</a>
+      </li>
+    </ul>
+
     <form [formGroup]="searchForm" *ngIf="searching">
       <input class="form-control my-2" type="text" placeholder="Найти" formControlName="search">
     </form>

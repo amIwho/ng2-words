@@ -1,32 +1,42 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {User} from "../models/user";
-import "rxjs/add/observable/of";
 import {WordsHttpService} from "./words-http.service";
 import {RequestOptions, Headers} from "@angular/http";
+
 
 @Injectable()
 export class UserService {
 
-  signupUserUrl = '/api/sendToken';
+  signupUrl = '/api/signup';
+  signinUrl = '/api/signin';
+  logoutUrl = '/api/signout';
+  currentUrl = '/api/me';
 
   constructor(
     private http: WordsHttpService
   ) { }
 
-  getCurrentUser(): Observable<User> {
-    return Observable.of({
-      email: 'kalinon7@gmail.com',
-      username: 'amIwho',
-      fio: 'Сидоркин Олег Валентинович'
-    })
+  getCurrentUser() {
+    return this.http.get(this.currentUrl).map(res => res.json());
   }
 
-  sendToken(email) {
+  signup(credentials) {
     const headers = new Headers({'Content-Type': 'application/json'});
     const options = new RequestOptions({headers: headers});
 
-    return this.http.post(this.signupUserUrl, JSON.stringify({email: email}), options);
+    return this.http.post(this.signupUrl, JSON.stringify({username: credentials.username, password: credentials.password}), options)
+      .map(res => res.json());
+  }
+
+  signin(credentials) {
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const options = new RequestOptions({headers: headers});
+
+    return this.http.post(this.signinUrl, JSON.stringify({username: credentials.username, password: credentials.password}), options)
+      .map(res => res.json());
+  }
+
+  logout() {
+    return this.http.get(this.logoutUrl);
   }
 
 }

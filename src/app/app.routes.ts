@@ -5,8 +5,8 @@ import {SignupComponent} from "./words-app/layout/signup/signup.component";
 
 const appRoutes: Routes = [
   {path: '', component: WordsAppComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'sendToken', component: SignupComponent},
+  {path: 'signin', component: LoginComponent},
+  {path: 'signup', component: SignupComponent},
   {path: '**', redirectTo: ''}
 ];
 
