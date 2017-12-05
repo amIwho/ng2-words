@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../services/user.service";
-import {Router} from "@angular/router";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {UserService} from '../../services/user.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'words-signup',
@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
     if (this.signupForm.valid) {
       this.userService.signup({username: this.signupForm.get('email').value, password: this.signupForm.get('passwords').value.password})
         .subscribe((res) => {
-            this.router.navigate(['/'])
+            this.router.navigate(['/']);
         }, (err) => {
           this.error = err.json().message;
         });

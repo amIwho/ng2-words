@@ -49,7 +49,7 @@ type:
   })
 
 
-then create file named `eclipse/secrets.json` containing credentials:
+then create file named `express/secrets.json` containing credentials:
 
 secrets.json:
 {

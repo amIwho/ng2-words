@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from "../../models/user";
-import {UserService} from "../../services/user.service";
-import {FormBuilder, FormGroup} from "@angular/forms";
-import {Router} from "@angular/router";
+import {User} from '../../models/user';
+import {UserService} from '../../services/user.service';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'words-header',
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(
       (user) => {
         if (user === null) {
-          this.router.navigate(['/signin'])
+          this.router.navigate(['/signin']);
         } else {
           this.currentUser = user;
         }
@@ -40,8 +40,8 @@ export class HeaderComponent implements OnInit {
   signout() {
     this.userService.logout()
       .subscribe((res) => {
-      this.router.navigate(['/signin'])
-    })
+      this.router.navigate(['/signin']);
+    });
   }
 
 

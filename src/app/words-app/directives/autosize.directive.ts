@@ -16,13 +16,13 @@ export class Autosize {
   ngAfterContentChecked(): void {
     this.adjust();
   }
-  
+
   adjust(): void {
     this.element.nativeElement.style.overflow = 'hidden';
     this.element.nativeElement.style.height = 'auto';
     const thenScrollTo = this.element.nativeElement.scrollHeight + this.element.nativeElement.scrollTop;
     this.element.nativeElement.style.height = this.element.nativeElement.scrollHeight + 40 + 'px';
     window.scrollTo(0, thenScrollTo + 20);
-    
+
   }
 }

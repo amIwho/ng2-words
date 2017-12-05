@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {TextService} from "../../services/text.service";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {TextService} from '../../services/text.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 
 declare var moment: any;
@@ -14,7 +14,6 @@ declare var moment: any;
 export class AreaComponent implements OnInit {
 
   textForm: FormGroup;
-
 
   STATES = {
     saving: 'saving',
@@ -44,8 +43,8 @@ export class AreaComponent implements OnInit {
 
     this.textService.getTextByDate(this.date).subscribe((text) => {
       this.textForm.get('text').patchValue(text[0].text, {emitEvent: false});
-      setInterval(() => {this.save()}, 10000)
-    })
+      setInterval(() => {this.save();}, 10000);
+    });
   }
 
   initForm() {
@@ -55,13 +54,13 @@ export class AreaComponent implements OnInit {
 
     this.textForm.get('text').valueChanges.debounceTime(10).subscribe((text) => {
       this.state = this.STATES.notsaved;
-      let wordsCount = this.getText().trim().split(/[\s,.;]+/).length;
+      const wordsCount = this.getText().trim().split(/[\s,.;]+/).length;
       this.updateCounter.emit({wordsCount: wordsCount});
-    })
+    });
   }
 
   getText() {
-    return this.textForm.get('text').value
+    return this.textForm.get('text').value;
   }
 
   save() {
@@ -73,8 +72,8 @@ export class AreaComponent implements OnInit {
         }
       }, (err) => {
         this.state = this.STATES.notsaved;
-        this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!')
-      })
+        this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!');
+      });
     }
   }
 
@@ -87,12 +86,12 @@ export class AreaComponent implements OnInit {
       this.textService.saveText(this.getText()).subscribe((res) => {
         if (res.json().ok === 1) {
           this.state = this.STATES.saved;
-          this.toastr.success('Сохранение прошло успешно!', 'Продолжайте!')
+          this.toastr.success('Сохранение прошло успешно!', 'Продолжайте!');
         }
       }, (err) => {
         this.state = this.STATES.notsaved;
-        this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!')
-      })
+        this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!');
+      });
     }
   }
 

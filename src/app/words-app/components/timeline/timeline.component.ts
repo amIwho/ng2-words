@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Timeline} from "../../models/timeline";
-import {TimelineService} from "../../services/timeline.service";
+import {Timeline} from '../../models/timeline';
+import {TimelineService} from '../../services/timeline.service';
 
 declare var moment: any;
 

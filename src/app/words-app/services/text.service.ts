@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {RequestOptions, Headers} from "@angular/http";
-import {WordsHttpService} from "./words-http.service";
+import {Observable} from 'rxjs/Observable';
+import {RequestOptions, Headers} from '@angular/http';
+import {WordsHttpService} from './words-http.service';
 
 declare var moment: any;
 

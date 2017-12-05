@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import {Timeline} from "../models/timeline";
-import {WordsHttpService} from "./words-http.service";
+import {Observable} from 'rxjs/Observable';
+import {Timeline} from '../models/timeline';
+import {WordsHttpService} from './words-http.service';
 
 @Injectable()
 export class TimelineService {
@@ -11,6 +11,6 @@ export class TimelineService {
   ) { }
 
   getTimelineData(month) {
-    return this.http.get('/api/timeline/'+ month).map(res => res.json());
+    return this.http.get('/api/timeline/' + month).map(res => res.json());
   }
 }

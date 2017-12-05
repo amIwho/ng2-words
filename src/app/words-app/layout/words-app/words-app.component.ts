@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
-import {TimelineService} from "../../services/timeline.service";
-import {Timeline} from "../../models/timeline";
+import {TimelineService} from '../../services/timeline.service';
+import {Timeline} from '../../models/timeline';
 
 @Component({
   selector: 'words-app',
@@ -22,7 +22,7 @@ export class WordsAppComponent implements OnInit {
   ngOnInit() {
     moment.locale('ru-RU');
     this.month = moment().format('MM.YYYY');
-    this.monthString = moment().format("MMMM");
+    this.monthString = moment().format('MMMM');
     this.date = moment().format('DD.MM.YYYY');
     this.currentDayNumber = +moment().format('D');
 
@@ -33,14 +33,13 @@ export class WordsAppComponent implements OnInit {
         this.timeline[i] = 0;
       }
 
-
       for (let i = this.currentDayNumber; i < dayCount; i++) {
         this.timeline[i] = '--';
       }
 
       timeline.forEach((day) => {
         const dayN = +moment(day.date, 'DD.MM.YYYY').format('D');
-        this.timeline[dayN-1] = day.words;
+        this.timeline[dayN - 1] = day.words;
       });
     });
   }
