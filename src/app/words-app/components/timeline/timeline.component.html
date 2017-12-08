@@ -1,18 +1,25 @@
 <section>
-    <header class="pt-2">
-      <h3>{{monthString | capitalize}}</h3>
-    </header>
-  <button class="btn btn-xs btn-primary item" (click)="prevMonth()"> << </button>
-    <ul class="timeline">
-      <li class="item" *ngFor="let day of timeline; let i = index">
-        <span class="timeline__date">{{i+1}}</span>
-        <a type="button" class="btn btn-sm" [ngClass]="{
+  <header class="pt-2">
+    <h3>{{monthString | capitalize}}</h3>
+  </header>
+
+  <ul class="timeline">
+    <li class="item">
+      <button class="btn btn-xs btn-primary item" (click)="prevMonth()"> <<</button>
+    </li>
+    <li class="item" *ngFor="let day of timeline; let i = index">
+      <span class="timeline__date">{{i+1}}</span>
+      <a type="button" class="btn btn-sm" [ngClass]="{
         'btn-default': day === '--',
         'btn-info': day === 0,
         'btn-danger': day >= 500,
         'btn-success': day > 0 && day < 500}"
          (click)="viewText(i)">{{day}}</a>
-      </li>
-    </ul>
-    <button class="btn  btn-xs btn-primary item" (click)="nextMonth()" *ngIf="monthString !== currentMonth"> >> </button>
+    </li>
+    <li class="item">
+      <button class="btn  btn-xs btn-primary item" (click)="nextMonth()" *ngIf="monthString !== currentMonth"> >>
+      </button>
+    </li>
+  </ul>
+
 </section>

@@ -18,11 +18,15 @@ export class Autosize {
   }
 
   adjust(): void {
-    this.element.nativeElement.style.overflow = 'hidden';
-    this.element.nativeElement.style.height = 'auto';
-    const thenScrollTo = this.element.nativeElement.scrollHeight + this.element.nativeElement.scrollTop;
-    this.element.nativeElement.style.height = this.element.nativeElement.scrollHeight + 40 + 'px';
-    window.scrollTo(0, thenScrollTo + 20);
+    const el = this.element.nativeElement;
+    const scrollLeft = window.pageXOffset;
+    const scrollTop = window.pageYOffset + 30;
+
+    el.style.overflow = 'hidden';
+    el.style.height = "auto";
+    el.style.height = el.scrollHeight + 30 + 'px';
+
+    window.scrollTo(scrollLeft, scrollTop);
 
   }
 }

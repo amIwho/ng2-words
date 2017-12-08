@@ -1,10 +1,10 @@
 .timeline {
-  padding-left: 0;
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .item {
-  display: inline-block;
   list-style-type: none;
   margin: 0.4em 0.1em;
   cursor: pointer;
