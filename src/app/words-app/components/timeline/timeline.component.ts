@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Timeline} from '../../models/timeline';
 import {TimelineService} from '../../services/timeline.service';
 
@@ -17,6 +17,8 @@ export class TimelineComponent implements OnInit {
   @Input() month: string;
   @Input() monthString: string;
 
+  @Output() showMeHistoryRecord = new EventEmitter();
+
   constructor(
     private timelineService: TimelineService
   ) { }
@@ -34,6 +36,6 @@ export class TimelineComponent implements OnInit {
   }
 
   viewText(dayNumber) {
-
+    this.showMeHistoryRecord.emit({dayNumber});
   }
 }

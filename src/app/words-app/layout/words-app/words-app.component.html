@@ -1,6 +1,7 @@
 <words-header></words-header>
 
-<words-timeline [month]="month" [monthString]="monthString" [timeline]="timeline"></words-timeline>
+<words-timeline [month]="month" [monthString]="monthString" [timeline]="timeline"
+                (showMeHistoryRecord)="showHistoryRecord($event)"></words-timeline>
 
-<words-area [date]="date" (updateCounter)="updateTimeline($event)"></words-area>
+<words-area [date]="date" (updateCounter)="updateTimeline($event)" ></words-area>
 

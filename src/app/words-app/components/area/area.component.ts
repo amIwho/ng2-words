@@ -22,13 +22,23 @@ export class AreaComponent implements OnInit {
   };
 
   state = this.STATES.saved;
-
   currentDate: string;
-  text: string;
-
   saving = false;
+  _textDate: string;
+  savingCycleInterval: any;
 
-  @Input() date;
+  historyRecord: string;
+
+  @Input()
+  set date(newDate: string) {
+    this._textDate = newDate;
+    this.updateAreaContent(this._textDate);
+  }
+
+  get date() {
+    return this._textDate;
+  }
+
   @Output() updateCounter = new EventEmitter();
 
   constructor(private textService: TextService,
@@ -38,12 +48,20 @@ export class AreaComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-
     this.currentDate = moment().format('DD.MM.YYYY');
+  }
 
-    this.textService.getTextByDate(this.date).subscribe((text) => {
-      this.textForm.get('text').patchValue(text[0].text, {emitEvent: false});
-      setInterval(() => {this.save();}, 10000);
+  updateAreaContent(date: string) {
+    this.textService.getTextByDate(this._textDate).subscribe((text) => {
+      if (date === this.currentDate) {
+        this.textForm.get('text').patchValue(text[0].text, {emitEvent: false});
+        this.savingCycleInterval = setInterval(() => {
+          this.save();
+        }, 10000);
+      } else {
+        clearInterval(this.savingCycleInterval);
+        this.historyRecord = text[0] && text[0].text || 'Здесь ничего нет';
+      }
     });
   }
 

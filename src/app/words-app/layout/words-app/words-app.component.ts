@@ -47,4 +47,8 @@ export class WordsAppComponent implements OnInit {
   updateTimeline(data) {
     this.timeline[this.currentDayNumber - 1] = data.wordsCount;
   }
+
+  showHistoryRecord(event) {
+    this.date = moment(this.month, 'MM.YYYY').date(event.dayNumber).format('DD.MM.YYYY');
+  }
 }

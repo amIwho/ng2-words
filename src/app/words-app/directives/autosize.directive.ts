@@ -14,17 +14,19 @@ export class Autosize {
   constructor(public element: ElementRef) { }
 
   ngAfterContentChecked(): void {
-    this.adjust();
+    this.adjust(true);
   }
 
-  adjust(): void {
+  adjust(isPaste = false): void {
+    const dropMoreOn = isPaste ? 0 : 30;
+
     const el = this.element.nativeElement;
     const scrollLeft = window.pageXOffset;
-    const scrollTop = window.pageYOffset + 30;
+    const scrollTop = window.pageYOffset + dropMoreOn;
 
     el.style.overflow = 'hidden';
     el.style.height = "auto";
-    el.style.height = el.scrollHeight + 30 + 'px';
+    el.style.height = el.scrollHeight + dropMoreOn + 'px';
 
     window.scrollTo(scrollLeft, scrollTop);
 
