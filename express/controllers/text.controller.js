@@ -9,8 +9,8 @@ exports.timeline = function (req, res) {
 
   TextModel.find({
     date: {
-      $gt: moment(req.params.month, 'MM.YYYY').startOf('month').utc(),
-      $lt: moment(req.params.month, 'MM.YYYY').endOf('month').utc()
+      $gte: moment(req.params.month, 'MM.YYYY').startOf('month').utc().toISOString(),
+      $lte: moment(req.params.month, 'MM.YYYY').endOf('month').utc().toISOString()
     }
   })
     .sort('-date')

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {RequestOptions, Headers} from '@angular/http';
 import {WordsHttpService} from './words-http.service';
+import {C} from '../const';
 
 declare var moment: any;
 
@@ -23,7 +24,7 @@ export class TextService {
 
     return this.http.post(this.postTextsUrl, JSON.stringify({
       text: text,
-      date: moment().utc().format('DD.MM.YYYY')
+      date: moment().utc().format(C.DDMMYYYY)
     }), options);
   }
 

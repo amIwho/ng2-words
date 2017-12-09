@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {TextService} from '../../services/text.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
+import {C} from '../../const';
 
 declare var moment: any;
 
@@ -48,17 +49,12 @@ export class AreaComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.currentDate = moment().format('DD.MM.YYYY');
+    this.currentDate = moment().format(C.DDMMYYYY);
   }
 
-  updateAreaContent(date: string) {
-    this.textService.getTextByDate(this._textDate).subscribe((text) => {
-      if (date === this.currentDate) {
-        this.textForm.get('text').patchValue(text[0].text, {emitEvent: false});
-        this.savingCycleInterval = setInterval(() => {
-          this.save();
-        }, 10000);
-      } else {
+  updateAreaContent(date: string) {  this.textService.getTextByDate(this._textDate).subscribe((text) => {
+      if (date === this.currentDate) {this.textForm.get('text').patchValue(text[0] && text[0].text, {emitEvent: false});
+      this.savingCycleInterval = setInterval(() => {this.save(); }, 10000); } else {
         clearInterval(this.savingCycleInterval);
         this.historyRecord = text[0] && text[0].text || 'Здесь ничего нет';
       }

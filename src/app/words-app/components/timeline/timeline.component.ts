@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {Timeline} from '../../models/timeline';
 import {TimelineService} from '../../services/timeline.service';
+import {C} from '../../const';
 
 declare var moment: any;
 
@@ -15,7 +16,7 @@ export class TimelineComponent implements OnInit {
 
   @Input() timeline: Timeline;
   @Input() month: string;
-  @Input() monthString: string;
+  @Input() monthName: string;
 
   @Output() showMeHistoryRecord = new EventEmitter();
 
@@ -24,7 +25,7 @@ export class TimelineComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.currentMonth = moment().format('MM.YYYY');
+    this.currentMonth = moment().format(C.MMYYYY);
   }
 
   nextMonth() {

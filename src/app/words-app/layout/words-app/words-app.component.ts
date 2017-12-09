@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {TimelineService} from '../../services/timeline.service';
-import {Timeline} from '../../models/timeline';
+import { C } from '../../const';
+
 
 @Component({
   selector: 'words-app',
@@ -11,7 +12,7 @@ import {Timeline} from '../../models/timeline';
 export class WordsAppComponent implements OnInit {
 
   month: string;
-  monthString: string;
+  monthName: string;
   date: string;
   timeline = [];
   currentDayNumber: number;
@@ -21,14 +22,14 @@ export class WordsAppComponent implements OnInit {
 
   ngOnInit() {
     moment.locale('ru-RU');
-    this.month = moment().format('MM.YYYY');
-    this.monthString = moment().format('MMMM');
-    this.date = moment().format('DD.MM.YYYY');
+    this.month = moment().format(C.MMYYYY);
+    this.monthName = moment().format('MMMM');
+    this.date = moment().format(C.DDMMYYYY);
     this.currentDayNumber = +moment().format('D');
 
 
     this.timelineService.getTimelineData(this.month).subscribe((timeline) => {
-      const dayCount = moment(this.month, 'MM.YYYY').daysInMonth();
+      const dayCount = moment(this.month, C.MMYYYY).daysInMonth();
       for (let i = 0; i < this.currentDayNumber; i++) {
         this.timeline[i] = 0;
       }
@@ -38,7 +39,7 @@ export class WordsAppComponent implements OnInit {
       }
 
       timeline.forEach((day) => {
-        const dayN = +moment(day.date, 'DD.MM.YYYY').format('D');
+        const dayN = +moment(day.date, C.DDMMYYYY).format('D');
         this.timeline[dayN - 1] = day.words;
       });
     });
@@ -49,6 +50,6 @@ export class WordsAppComponent implements OnInit {
   }
 
   showHistoryRecord(event) {
-    this.date = moment(this.month, 'MM.YYYY').date(event.dayNumber).format('DD.MM.YYYY');
+    this.date = moment(this.month, C.MMYYYY).date(event.dayNumber).format(C.DDMMYYYY);
   }
 }

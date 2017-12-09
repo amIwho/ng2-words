@@ -1,6 +1,6 @@
 <section>
   <header class="pt-2">
-    <h3>{{monthString | capitalize}}</h3>
+    <h3>{{monthName | capitalize}}</h3>
   </header>
 
   <ul class="timeline">
@@ -17,7 +17,7 @@
          (click)="viewText(i + 1)">{{day}}</a>
     </li>
     <li class="item">
-      <button class="btn  btn-xs btn-primary item" (click)="nextMonth()" *ngIf="monthString !== currentMonth"> >>
+      <button class="btn  btn-xs btn-primary item" (click)="nextMonth()" *ngIf="month !== currentMonth"> >>
       </button>
     </li>
   </ul>
