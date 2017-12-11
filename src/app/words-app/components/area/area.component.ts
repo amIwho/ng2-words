@@ -6,7 +6,6 @@ import {C} from '../../const';
 
 declare var moment: any;
 
-
 @Component({
   selector: 'words-area',
   templateUrl: './area.component.html',
@@ -16,13 +15,9 @@ export class AreaComponent implements OnInit {
 
   textForm: FormGroup;
 
-  STATES = {
-    saving: 'saving',
-    saved: 'saved',
-    notsaved: 'notsaved'
-  };
 
-  state = this.STATES.saved;
+
+  state = C.STATES.saved;
   currentDate: string;
   saving = false;
   _textDate: string;
@@ -52,6 +47,10 @@ export class AreaComponent implements OnInit {
     this.currentDate = moment().format(C.DDMMYYYY);
   }
 
+  isToday() {
+    return this.date === this.currentDate;
+  }
+
   updateAreaContent(date: string) {  this.textService.getTextByDate(this._textDate).subscribe((text) => {
       if (date === this.currentDate) {this.textForm.get('text').patchValue(text[0] && text[0].text, {emitEvent: false});
       this.savingCycleInterval = setInterval(() => {this.save(); }, 10000); } else {
@@ -67,9 +66,9 @@ export class AreaComponent implements OnInit {
     });
 
     this.textForm.get('text').valueChanges.debounceTime(10).subscribe((text) => {
-      this.state = this.STATES.notsaved;
+      this.state = C.STATES.notsaved;
       const wordsCount = this.getText().trim().split(/[\s,.;]+/).length;
-      this.updateCounter.emit({wordsCount: wordsCount});
+      this.updateCounter.emit({day: this.currentDate, wordsCount: wordsCount});
     });
   }
 
@@ -78,32 +77,45 @@ export class AreaComponent implements OnInit {
   }
 
   save() {
-    if (this.state === this.STATES.notsaved && this.getText()) {
-      this.state = this.STATES.saving;
+    if (this.state === C.STATES.notsaved && this.getText()) {
+      this.state = C.STATES.saving;
       this.textService.saveText(this.getText()).subscribe((res) => {
         if (res.json().ok === 1) {
-          this.state = this.STATES.saved;
+          this.state = C.STATES.saved;
         }
       }, (err) => {
-        this.state = this.STATES.notsaved;
+        this.state = C.STATES.notsaved;
         this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!');
       });
     }
   }
+
+  isSaving() {
+    return this.state === C.STATES.saving;
+  }
+
+  isSaved() {
+    return this.state === C.STATES.saved;
+  }
+
+  isNotSaved() {
+    return this.state === C.STATES.notsaved;
+  }
+
 
   saveByKeys(e) {
     e.preventDefault();
     e.stopPropagation();
 
     if (this.getText()) {
-      this.state = this.STATES.saving;
+      this.state = C.STATES.saving;
       this.textService.saveText(this.getText()).subscribe((res) => {
         if (res.json().ok === 1) {
-          this.state = this.STATES.saved;
+          this.state = C.STATES.saved;
           this.toastr.success('Сохранение прошло успешно!', 'Продолжайте!');
         }
       }, (err) => {
-        this.state = this.STATES.notsaved;
+        this.state = C.STATES.notsaved;
         this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!');
       });
     }

@@ -1,7 +1,14 @@
 <words-header></words-header>
 
-<words-timeline [month]="month" [monthName]="monthName" [timeline]="timeline"
-                (showMeHistoryRecord)="showHistoryRecord($event)"></words-timeline>
+<words-timeline
+  [date]="date"
+  [timeline]="timeline"
+  (showMeHistoryRecord)="showHistoryRecord($event)"
+  (changeMonth)="goToMonth($event)"
+></words-timeline>
 
-<words-area [date]="date" (updateCounter)="updateTimeline($event)" ></words-area>
+<words-area
+  [date]="date"
+  (updateCounter)="updateWordCountForCurrentDay($event)"
+></words-area>
 
