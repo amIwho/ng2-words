@@ -15,6 +15,7 @@ export class WordsAppComponent implements OnInit {
   today: string;
 
   timeline = [];
+  timelineState = '';
 
   constructor(private timelineService: TimelineService) { }
 
@@ -27,6 +28,7 @@ export class WordsAppComponent implements OnInit {
 
   updateTimeline() {
     this.timeline = [];
+    this.timelineState = '';
     const month = moment(this.date, C.DDMMYYYY).format(C.MMYYYY);
     const isCurrentMonth = moment(this.date, C.MMYYYY).format(C.MMYYYY) === moment(this.today, C.MMYYYY).format(C.MMYYYY);
     const currentDayNumber = isCurrentMonth ? +moment(this.date).format('D') : 0;
@@ -38,7 +40,7 @@ export class WordsAppComponent implements OnInit {
       }
 
       if (isCurrentMonth) {
-        for (let i = currentDayNumber - 1; i < amountOfDaysInMonth; i++) {
+        for (let i = currentDayNumber; i < amountOfDaysInMonth; i++) {
           this.timeline[i] = '--';
         }
       }
@@ -47,6 +49,7 @@ export class WordsAppComponent implements OnInit {
         const dayN = +moment(day.date, C.DDMMYYYY).format('D');
         this.timeline[dayN - 1] = day.words;
       });
+      this.timelineState = 'show';
     });
   }
 
@@ -60,7 +63,7 @@ export class WordsAppComponent implements OnInit {
 
   goToMonth(event) {
     this.date = event.month === moment(this.today, C.DDMMYYYY).format(C.MMYYYY) ?
-      this.today : moment(event.month, C.MMYYYY).endOf('month').format(C.DDMMYYYY);
+      this.today : moment(event.month, C.MMYYYY).startOf('month').format(C.DDMMYYYY);
     this.updateTimeline();
   }
 }

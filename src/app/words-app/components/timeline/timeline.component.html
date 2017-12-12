@@ -1,26 +1,29 @@
 <section>
-  <header class="pt-2">
-    <h3>{{getMonthName() | capitalize}}</h3>
+  <header class="pt-2 row">
+    <span class="text-capitalize col-6">{{getMonthName()}}</span>
+    <span class="text-right col-6">{{date}}</span>
   </header>
 
   <ul class="timeline">
-    <li class="item">
+    <div class="item">
       <button class="btn btn-xs btn-primary item" (click)="toMonth(-1)"> <<</button>
-    </li>
-    <li class="item" *ngFor="let day of timeline; let i = index">
-      <span class="timeline__date">{{ i + 1 }}</span>
-      <a type="button" class="btn btn-sm" [ngClass]="{
+    </div>
+    <div class="timeline__days" [@timelineState]="state" *ngIf="timeline.length">
+      <div class="item" *ngFor="let day of timeline; let i = index">
+        <span class="timeline__date">{{ i + 1 }}</span>
+        <a type="button" class="btn btn-sm" [ngClass]="{
         'active': activeDay === i + 1,
         'btn-default': day === '--',
         'btn-info': day === 0,
         'btn-danger': day >= 500,
         'btn-success': day > 0 && day < 500}"
-         (click)="viewText(i + 1)">{{day}}</a>
-    </li>
-    <li class="item">
+           (click)="viewText(i + 1)">{{day}}</a>
+      </div>
+    </div>
+    <div class="item next-month-button">
       <button class="btn  btn-xs btn-primary item" (click)="toMonth(1)" *ngIf="!isCurrentMonth()"> >>
       </button>
-    </li>
+    </div>
   </ul>
 
 </section>
