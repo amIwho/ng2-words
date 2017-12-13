@@ -32,9 +32,11 @@ export class TimelineComponent implements OnInit {
 
   @Input()
   set date(value) {
+    const sameMonthDate = this._date &&
+      moment(value, C.DDMMYYYY).format(C.MMYYYY) === moment(this._date, C.DDMMYYYY).format(C.MMYYYY);
     this._date = value;
     this.activeDay = +moment(value, C.DDMMYYYY).format('D');
-    this.updateTimeline();
+    sameMonthDate || this.updateTimeline();
   }
   get date() {
     return this._date;

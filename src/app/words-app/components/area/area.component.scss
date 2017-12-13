@@ -22,6 +22,14 @@
 
 }
 
-.history-text__pre {
-  color: white;
+.history-text {
+  font-size: 24px;
+  line-height: 40px;
+  padding: 45px 100px 34px;
+
+  &__pre {
+    color: #ddd;
+    white-space: pre-wrap;
+  }
 }
+
