@@ -15,14 +15,10 @@ export class AreaComponent implements OnInit {
 
   textForm: FormGroup;
 
-
-
   state = C.STATES.saved;
   currentDate: string;
-  saving = false;
   _textDate: string;
   savingCycleInterval: any;
-
   historyRecord: string;
 
   @Input()
@@ -30,7 +26,6 @@ export class AreaComponent implements OnInit {
     this._textDate = newDate;
     this.updateAreaContent(this._textDate);
   }
-
   get date() {
     return this._textDate;
   }
@@ -67,7 +62,12 @@ export class AreaComponent implements OnInit {
 
     this.textForm.get('text').valueChanges.debounceTime(10).subscribe((text) => {
       this.state = C.STATES.notsaved;
-      const wordsCount = this.getText().trim().split(/[\s,.;]+/).length;
+      const wordsArr = this.getText().trim().split(/[\s,.;]+/);
+      for (let i = 0; i < wordsArr.length; i++) {
+        if (wordsArr[i] === '') wordsArr.splice(i, 1) && i--;
+
+      }
+      const wordsCount = wordsArr.length;
       this.updateCounter.emit({day: this.currentDate, wordsCount: wordsCount});
     });
   }

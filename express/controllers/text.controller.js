@@ -30,6 +30,8 @@ exports.timeline = function (req, res) {
 
 };
 
+//todo: implement encryption
+
 exports.create = function (req, res) {
   TextModel.update({
       date: moment(req.body.date, 'DD.MM.YYYY').utc(),
@@ -37,7 +39,7 @@ exports.create = function (req, res) {
     }, {
       $set: {
         text: req.body.text,
-        words: req.body.text.trim().split(/[\s,.;]+/).length,
+        words: req.body.text.trim().split(/[\s,.;]+/).filter(el => el !== '').length,
         date: moment(req.body.date, 'DD.MM.YYYY').utc()
       }
     }, {
@@ -53,6 +55,8 @@ exports.create = function (req, res) {
       }
     })
 };
+
+//todo: implement decryption
 
 exports.read = function (req, res) {
 

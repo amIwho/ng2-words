@@ -13,11 +13,11 @@
         <span class="timeline__date">{{ i + 1 }}</span>
         <a type="button" class="btn btn-sm" [ngClass]="{
         'active': activeDay === i + 1,
-        'btn-default': day === '--',
+        'btn-default': day === -1,
         'btn-info': day === 0,
         'btn-danger': day >= 500,
         'btn-success': day > 0 && day < 500}"
-           (click)="viewText(i + 1)">{{day}}</a>
+           (click)="viewText(i + 1)">{{day === -1 ? '--' : day}}</a>
       </div>
     </div>
     <div class="item next-month-button">

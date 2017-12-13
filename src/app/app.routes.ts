@@ -3,6 +3,9 @@ import {WordsAppComponent} from './words-app/layout/words-app/words-app.componen
 import {LoginComponent} from './words-app/layout/login/login.component';
 import {SignupComponent} from './words-app/layout/signup/signup.component';
 
+//todo: implement /DD.MM.YYYY route
+//todo: implement multilanguage /about page
+//todo: implement /profile page with personal encryption key
 const appRoutes: Routes = [
   {path: '', component: WordsAppComponent},
   {path: 'signin', component: LoginComponent},

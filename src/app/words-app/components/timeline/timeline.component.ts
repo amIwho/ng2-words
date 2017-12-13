@@ -1,10 +1,11 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
 import {trigger, state, style, animate, transition} from '@angular/animations';
-import {Timeline} from '../../models/timeline';
 import {TimelineService} from '../../services/timeline.service';
 import {C} from '../../const';
 
 declare var moment: any;
+
+//todo: update WordCount
 
 @Component({
   selector: 'words-timeline',
@@ -24,31 +25,61 @@ export class TimelineComponent implements OnInit {
 
   currentMonth: string;
   _date: string;
+  timeline: number[];
+  activeDay: number;
+  today: string;
+  timelineState: string;
 
-  @Input() timeline: Timeline;
   @Input()
   set date(value) {
     this._date = value;
     this.activeDay = +moment(value, C.DDMMYYYY).format('D');
+    this.updateTimeline();
   }
   get date() {
     return this._date;
   }
-  @Input() state: string;
 
+  @Input() state: string;
   @Output() showMeHistoryRecord = new EventEmitter();
   @Output() changeMonth = new EventEmitter();
 
-  activeDay: number;
-  today: string;
-
-  constructor(private timelineService: TimelineService) {
-  }
+  constructor(private timelineService: TimelineService) { }
 
   ngOnInit() {
     this.currentMonth = moment().format(C.MMYYYY);
-
     this.today = moment().format(C.DDMMYYYY);
+  }
+
+  updateTimeline() {
+    this.timeline = [];
+    this.timelineState = '';
+    const month = moment(this.date, C.DDMMYYYY).format(C.MMYYYY);
+    const isCurrentMonth = moment(this.date, C.DDMMYYYY).format(C.MMYYYY) === moment().format(C.MMYYYY);
+    const todayDayNumber = isCurrentMonth ? +moment().format('D') : 0;
+    const amountOfDaysInMonth = moment(month, C.MMYYYY).daysInMonth();
+
+    this.timelineService.getTimelineData(month).subscribe((timeline) => {
+      for (let i = 0; i < amountOfDaysInMonth; i++) {
+        this.timeline[i] = 0;
+      }
+
+      if (isCurrentMonth) {
+        for (let i = todayDayNumber; i < amountOfDaysInMonth; i++) {
+          this.timeline[i] = -1;
+        }
+      }
+
+      timeline.forEach((day) => {
+        const dayN = +moment(day.date, C.DDMMYYYY).format('D');
+        this.timeline[dayN - 1] = day.words;
+      });
+      this.timelineState = 'show';
+    });
+  }
+
+  updateWordCount(day, wordsCount) {
+    this.timeline[day - 1] = wordsCount;
   }
 
   getMonthName() {
