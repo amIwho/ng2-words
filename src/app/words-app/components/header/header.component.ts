@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
       .subscribe(
       (user) => {
         if (user === null) {
-          this.router.navigate(['/signin']);
+          // this.router.navigate(['/signin']);
         } else {
           this.currentUser = user;
         }

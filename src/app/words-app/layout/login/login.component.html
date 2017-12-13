@@ -4,6 +4,9 @@
       <div *ngIf="error" class="text-center text-danger">
         {{error}}
       </div>
+      <div class="to-about text-center">
+        <a routerLink="/about">Подробности о проекте</a>
+      </div>
       <form [formGroup]="loginForm">
         <fieldset>
           <div class="form-group">

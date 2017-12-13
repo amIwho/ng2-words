@@ -3,10 +3,11 @@
 @import '~bootstrap/scss/bootstrap';
 @import "~ngx-toastr/toastr";
 
-body {
+body, html {
   background:#333 url(/assets/img/body-bg.png) repeat;
   font-family: 'PT Sans Caption', sans-serif;
   color: #fff;
+  height: 100%;
 }
 
 
