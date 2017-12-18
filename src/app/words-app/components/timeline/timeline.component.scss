@@ -7,16 +7,16 @@
 .timeline__days {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
+  flex-wrap: wrap;
   overflow: hidden;
   width: 100%;
+  margin: 0 20px;
 }
 
 .item {
-  list-style-type: none;
   margin: 0.4em 0.1em;
   cursor: pointer;
+  flex: 0 1 auto;
 }
 
 .timeline__date {

@@ -4,8 +4,8 @@
     <span class="text-right col-6">{{date}}</span>
   </header>
 
-  <ul class="timeline">
-    <div class="item">
+  <div class="timeline">
+    <div class="left-button">
       <button class="btn btn-xs btn-primary item" (click)="toMonth(-1)"> <<</button>
     </div>
     <div class="timeline__days" [@timelineState]="state" *ngIf="timeline.length">
@@ -24,6 +24,6 @@
       <button class="btn  btn-xs btn-primary item" (click)="toMonth(1)" *ngIf="!isCurrentMonth()"> >>
       </button>
     </div>
-  </ul>
+  </div>
 
 </section>
