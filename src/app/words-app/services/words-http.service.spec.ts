@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { WordsHttpService } from './words-http.service';
+import { AuthInterceptor } from './words-http.service';
 
-describe('WordsHttpService', () => {
+describe('AuthInterceptor', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WordsHttpService]
+      providers: [AuthInterceptor]
     });
   });
 
-  it('should be created', inject([WordsHttpService], (service: WordsHttpService) => {
+  it('should be created', inject([AuthInterceptor], (service: AuthInterceptor) => {
     expect(service).toBeTruthy();
   }));
 });

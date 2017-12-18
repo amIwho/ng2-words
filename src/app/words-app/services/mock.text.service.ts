@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import {RequestOptions, Headers} from '@angular/http';
-import {WordsHttpService} from './words-http.service';
+import {AuthInterceptor} from './words-http.service';
 
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
@@ -14,7 +13,7 @@ export class MockTextService {
   postTextsUrl = '/api/texts';
   getTextByDateUrl = '/api/text/';
 
-  constructor(private http: WordsHttpService) { }
+  constructor(private http: AuthInterceptor) { }
 
   getTextByDate(dateString) {
     return Observable.of({

@@ -1,34 +1,49 @@
-<div *ngIf="isToday()" class="col-10 offset-1">
-  <h1>Автор, жги!</h1>
-  <div>
-    <img *ngIf="isSaving()" width="16" height="16"
-         src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-    <div *ngIf="isSaved()" class="text-info">
-      <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Сохранено
+<div class="row" *ngIf="isToday()">
+  <div class="col-10 offset-1">
+    <h1>Автор, жги!</h1>
+    <div>
+      <img *ngIf="isSaving()" width="16" height="16"
+           src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+      <div *ngIf="isSaved()" class="text-info">
+        <span class="fa fa-check" aria-hidden="true"></span> Сохранено
+      </div>
+      <div *ngIf="isNotSaved()" class="text-danger">
+        <span class="fa fa-exclamation-circle" aria-hidden="true"></span> Изменено, но пока не сохранено
+      </div>
     </div>
-    <div *ngIf="isNotSaved()" class="text-danger">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Изменено, но пока не сохранено
+
+    <form [formGroup]="textForm" novalidate>
+    <textarea name="text"
+              title="write something"
+              class="form-control textarea-input"
+              cols="30"
+              rows="10"
+              formControlName="text"
+              autosize
+              (keydown.control.s)="saveByKeys($event)"
+              (keydown.control.ы)="saveByKeys($event)"
+              (keydown.tab)="putTab($event)"></textarea>
+
+    </form>
+  </div>
+  <div class="textarea-toolbar__wrapper col-1">
+    <div class="textarea-toolbar__wordsCount">
+      <button class="btn btn-sm" disabled [ngClass]="{
+        'btn-info': wordsCount === 0,
+        'btn-danger': wordsCount >= 500,
+        'btn-success': wordsCount > 0 && wordsCount < 500}">{{wordsCount}}</button>
+    </div>
+    <div class="textarea-toolbar__add-label-button">
+      <button class="btn btn-sm btn-info"><i class="fa fa-plus"></i> Добавить лейбл</button>
     </div>
   </div>
-
-  <form [formGroup]="textForm" novalidate>
-  <textarea name="text"
-            class="form-control textarea-input"
-            cols="30"
-            rows="10"
-            formControlName="text"
-            autosize
-            (keydown.control.s)="saveByKeys($event)"
-            (keydown.control.ы)="saveByKeys($event)"
-            (keydown.tab)="putTab($event)"
-  ></textarea>
-  </form>
 </div>
-
-<!--todo: красиво отформатировать вывод истории-->
-<div *ngIf="!isToday()" class="col-10 offset-1">
-  <div class="history-text">
-        <pre class="history-text__pre">{{historyRecord}}</pre>
+<div class="row" *ngIf="!isToday()">
+  <div class="col-10 offset-1">
+    <div class="history-text">
+      <pre class="history-text__pre">{{historyRecord}}</pre>
+    </div>
   </div>
 </div>
+
 

@@ -33,13 +33,14 @@ exports.timeline = function (req, res) {
 //todo: implement encryption
 
 exports.create = function (req, res) {
+  const wordsCount = req.body.text.trim().split(/[\s,.;]+/).filter(el => el !== '').length;
   TextModel.update({
       date: moment(req.body.date, 'DD.MM.YYYY').utc(),
       user: req.user
     }, {
       $set: {
         text: req.body.text,
-        words: req.body.text.trim().split(/[\s,.;]+/).filter(el => el !== '').length,
+        words: wordsCount,
         date: moment(req.body.date, 'DD.MM.YYYY').utc()
       }
     }, {

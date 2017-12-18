@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../models/user';
 import {UserService} from '../../services/user.service';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
@@ -11,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  currentUser: User;
+  currentUser: any;
   searchForm: FormGroup;
   searching = false;
 
@@ -39,7 +38,7 @@ export class HeaderComponent implements OnInit {
 
   signout() {
     this.userService.logout()
-      .subscribe((res) => {
+      .subscribe(() => {
       this.router.navigate(['/signin']);
     });
   }

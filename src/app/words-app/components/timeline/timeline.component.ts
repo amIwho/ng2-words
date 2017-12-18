@@ -61,7 +61,7 @@ export class TimelineComponent implements OnInit {
     const todayDayNumber = isCurrentMonth ? +moment().format('D') : 0;
     const amountOfDaysInMonth = moment(month, C.MMYYYY).daysInMonth();
 
-    this.timelineService.getTimelineData(month).subscribe((timeline) => {
+    this.timelineService.getTimelineData(month).subscribe((timeline: any) => {
       for (let i = 0; i < amountOfDaysInMonth; i++) {
         this.timeline[i] = 0;
       }
@@ -72,7 +72,7 @@ export class TimelineComponent implements OnInit {
         }
       }
 
-      timeline.forEach((day) => {
+      timeline.map((day) => {
         const dayN = +moment(day.date, C.DDMMYYYY).format('D');
         this.timeline[dayN - 1] = day.words;
       });

@@ -9,7 +9,7 @@
 
   font-size: 24px;
   line-height:40px;
-  padding: 45px 100px 34px;
+  padding: 50px 100px 34px;
 
   -webkit-border-radius:12px;
   border-radius:12px;
@@ -33,3 +33,18 @@
   }
 }
 
+.textarea-toolbar__wrapper {
+  position: relative;
+
+  .textarea-toolbar__wordsCount {
+    position: absolute;
+    bottom: 30px;
+    left: -15px;
+  }
+
+  .textarea-toolbar__add-label-button {
+    position: absolute;
+    bottom: 62px;
+    left: -15px;
+  }
+}

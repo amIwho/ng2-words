@@ -2,7 +2,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import {LOCALE_ID, NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
 import {HeaderComponent} from './words-app/components/header/header.component';
@@ -13,10 +14,10 @@ import {UserService} from './words-app/services/user.service';
 import {TimelineService} from './words-app/services/timeline.service';
 import {TextService} from './words-app/services/text.service';
 import {CapitalizePipe} from './words-app/pipes/capitalize.pipe';
-import {WordsHttpService} from './words-app/services/words-http.service';
+import {AuthInterceptor} from './words-app/services/words-http.service';
 import {ToastrModule} from 'ngx-toastr';
-import { LoginComponent } from './words-app/layout/login/login.component';
-import { SignupComponent } from './words-app/layout/signup/signup.component';
+import {LoginComponent} from './words-app/layout/login/login.component';
+import {SignupComponent} from './words-app/layout/signup/signup.component';
 
 import {routing} from './app.routes';
 
@@ -27,7 +28,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/map';
 import {Autosize} from './words-app/directives/autosize.directive';
-import { AboutComponent } from './words-app/layout/about/about.component';
+import {AboutComponent} from './words-app/layout/about/about.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { AboutComponent } from './words-app/layout/about/about.component';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     routing,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -54,8 +55,9 @@ import { AboutComponent } from './words-app/layout/about/about.component';
     UserService,
     TimelineService,
     TextService,
-    WordsHttpService,
-    {provide: LOCALE_ID, useValue: 'ru-RU'}
+    AuthInterceptor,
+    {provide: LOCALE_ID, useValue: 'ru-RU'},
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })

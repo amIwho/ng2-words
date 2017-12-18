@@ -3,6 +3,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 
+
+//todo: перенести логин и регистрацию на сервер
 @Component({
   selector: 'words-login',
   templateUrl: './login.component.html',
@@ -27,14 +29,12 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.userService.signin(this.loginForm.value).subscribe((user) => {
+    this.userService.signin(this.loginForm.value).subscribe((user: any) => {
       if (user._id) {
         this.router.navigate(['/']);
       }
     }, (err) => {
-      if (err.message) {
-        this.error = err.message;
-      }
+        this.error = err.json().message;
     });
   }
 

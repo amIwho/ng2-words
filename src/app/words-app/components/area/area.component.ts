@@ -20,12 +20,14 @@ export class AreaComponent implements OnInit {
   _textDate: string;
   savingCycleInterval: any;
   historyRecord: string;
+  wordsCount = 0;
 
   @Input()
   set date(newDate: string) {
     this._textDate = newDate;
     this.updateAreaContent(this._textDate);
   }
+
   get date() {
     return this._textDate;
   }
@@ -46,9 +48,15 @@ export class AreaComponent implements OnInit {
     return this.date === this.currentDate;
   }
 
-  updateAreaContent(date: string) {  this.textService.getTextByDate(this._textDate).subscribe((text) => {
-      if (date === this.currentDate) {this.textForm.get('text').patchValue(text[0] && text[0].text, {emitEvent: false});
-      this.savingCycleInterval = setInterval(() => {this.save(); }, 10000); } else {
+  updateAreaContent(date: string) {
+    this.textService.getTextByDate(this._textDate).subscribe((text) => {
+      if (date === this.currentDate) {
+        this.textForm.get('text').patchValue(text[0] && text[0].text, {emitEvent: false});
+        this.wordsCount = this.getWordsCount();
+        this.savingCycleInterval = setInterval(() => {
+          this.save();
+        }, 10000);
+      } else {
         clearInterval(this.savingCycleInterval);
         this.historyRecord = text[0] && text[0].text || 'Здесь ничего нет';
       }
@@ -62,14 +70,17 @@ export class AreaComponent implements OnInit {
 
     this.textForm.get('text').valueChanges.debounceTime(10).subscribe((text) => {
       this.state = C.STATES.notsaved;
-      const wordsArr = this.getText().trim().split(/[\s,.;]+/);
-      for (let i = 0; i < wordsArr.length; i++) {
-        if (wordsArr[i] === '') wordsArr.splice(i, 1) && i--;
-
-      }
-      const wordsCount = wordsArr.length;
-      this.updateCounter.emit({day: this.currentDate, wordsCount: wordsCount});
+      this.wordsCount = this.getWordsCount();
+      this.updateCounter.emit({day: this.currentDate, wordsCount: this.wordsCount});
     });
+  }
+
+  getWordsCount() {
+    const wordsArr = this.getText().trim().split(/[\s,.;]+/);
+    for (let i = 0; i < wordsArr.length; i++) {
+      if (wordsArr[i] === '') wordsArr.splice(i, 1) && i--;
+    }
+    return wordsArr.length;
   }
 
   getText() {
@@ -77,10 +88,11 @@ export class AreaComponent implements OnInit {
   }
 
   save() {
-    if (this.state === C.STATES.notsaved && this.getText()) {
+    //todo: сохранение при переходе на другой день
+    if (this.state === C.STATES.notsaved) {
       this.state = C.STATES.saving;
-      this.textService.saveText(this.getText()).subscribe((res) => {
-        if (res.json().ok === 1) {
+      this.textService.saveText(this.getText()).subscribe((res: any) => {
+        if (res.ok === 1) {
           this.state = C.STATES.saved;
         }
       }, (err) => {
@@ -107,18 +119,17 @@ export class AreaComponent implements OnInit {
     e.preventDefault();
     e.stopPropagation();
 
-    if (this.getText()) {
-      this.state = C.STATES.saving;
-      this.textService.saveText(this.getText()).subscribe((res) => {
-        if (res.json().ok === 1) {
-          this.state = C.STATES.saved;
-          this.toastr.success('Сохранение прошло успешно!', 'Продолжайте!');
-        }
-      }, (err) => {
-        this.state = C.STATES.notsaved;
-        this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!');
-      });
-    }
+    this.state = C.STATES.saving;
+    //todo: DRY
+    this.textService.saveText(this.getText()).subscribe((res: any) => {
+      if (res.ok === 1) {
+        this.state = C.STATES.saved;
+        this.toastr.success('Сохранение прошло успешно!', 'Продолжайте!');
+      }
+    }, (err) => {
+      this.state = C.STATES.notsaved;
+      this.toastr.success('Попробуйте сохранить чуть позже!\n' + err, 'Что-то пошло не так!');
+    });
   }
 
   putTab(e) {

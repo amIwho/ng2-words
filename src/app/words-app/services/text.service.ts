@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {RequestOptions, Headers} from '@angular/http';
-import {WordsHttpService} from './words-http.service';
 import {C} from '../const';
+import {HttpClient} from "@angular/common/http";
 
 declare var moment: any;
 
@@ -12,20 +10,17 @@ export class TextService {
   postTextsUrl = '/api/texts';
   getTextByDateUrl = '/api/text/';
 
-  constructor(private http: WordsHttpService) { }
+  constructor(private http: HttpClient) { }
 
   getTextByDate(dateString) {
-    return this.http.get(this.getTextByDateUrl + dateString).map(res => res.json());
+    return this.http.get(this.getTextByDateUrl + dateString);
   }
 
   saveText(text) {
-    const headers = new Headers({'Content-Type': 'application/json'});
-    const options = new RequestOptions({headers: headers});
-
-    return this.http.post(this.postTextsUrl, JSON.stringify({
+    return this.http.post(this.postTextsUrl, {
       text: text,
       date: moment().utc().format(C.DDMMYYYY)
-    }), options);
+    });
   }
 
 }
