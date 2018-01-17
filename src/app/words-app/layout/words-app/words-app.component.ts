@@ -13,6 +13,7 @@ export class WordsAppComponent implements OnInit {
 
   date: string;
   today: string;
+  timelineState: string;
 
   @ViewChild(TimelineComponent) timelineComponent: TimelineComponent;
 

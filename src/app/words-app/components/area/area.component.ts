@@ -84,7 +84,7 @@ export class AreaComponent implements OnInit {
   }
 
   getText() {
-    return this.textForm.get('text').value;
+    return this.textForm.get('text').value || '';
   }
 
   save() {
