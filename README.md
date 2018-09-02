@@ -2,62 +2,40 @@
 
 Project for personal day-by-day diary.
 
+To install, follow the instruction below.
+
 To run just `npm i && ng build --prod && node server/server.js`
 
+## Install instruction
 
-
-## Install
-
-First thing to do is install MongoDB (https://www.mongodb.com/download-center?ct=atlasheader2#community). Please download it from the official web-site and install as usually.
-
-
-Then you have to configure authentication.
-
-Run mongodb server
-
-> mongod --port 27017 --dbpath <path to /express/data directory>
-
-Or for Win:
-
-> "C:\Program Files\MongoDB\Server\3.4\bin\mongod.exe" --port 27017 --dbpath <path to /express/data directory>
-
-
-Then create admin user
-
-> mongo --port 27017
-
+1. Install MongoDB from https://www.mongodb.com/dr/fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.2-signed.msi/download
+2. Create admin user by
+```
 > use admin
 > db.createUser({
-		user: "moadmin",
-	    pwd: "drunk horse singing am@zing",
+		user: "<adminusername>",
+	    pwd: "<adminpassword>",
 	    roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]
 	})
-	
+```
+3. Restart db with --auth option enabled
 then rerun database with --auth option:
+> mongod --auth --port 27017 --dbpath <path to /data directory>
+> `db.auth("<adminusername>", "<adminpassword>")`
 
-> mongod --auth --port 27017 --dbpath <path to /express/data directory> 
-	
-also you need to do `db.auth("moadmin", "drunk horse singing am@zing")` in mongo console using admin database and create your own user for your database.
-
-type:
+4. Create db for an app
 
 > use wordly
 > db.createUser({
     user: "wordly",
-    pwd: "l0ve is sweet pain",
+    pwd: "<your password>",
     roles: [ { role: "readWrite", db: "wordly" }]
   })
 
-
-then create file named `express/secrets.json` containing credentials:
+5. Create config file `express/secrets.json` containing credentials:
 
 secrets.json:
 {
 	"dbuser": "wordly",
-	"dbpassword": "l0ve is sweet pain"
+	"dbpassword": "<yourpassword>"
 }
-
-and run server by:
-
-> cd express && npm start
-

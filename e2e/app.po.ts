@@ -1,11 +1,11 @@
-import { browser, by, element } from 'protractor';
+import {browser, by, element} from 'protractor';
 
 export class Ng2WordsPage {
-  navigateTo() {
+    static navigateTo() {
     return browser.get('/');
   }
 
-  getParagraphText() {
+    static getParagraphText() {
     return element(by.css('app-root h1')).getText();
   }
 }

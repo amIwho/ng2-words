@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable()
 export class UserService {
 
-  signupUrl = '/api/signup';
+    signupUrl = '/api/register';
   signinUrl = '/api/signin';
   logoutUrl = '/api/signout';
   currentUrl = '/api/me';

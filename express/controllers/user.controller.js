@@ -6,7 +6,7 @@ const validator = require('validator');
 const UserModel = require('../models/user');
 const errorHandler = require('./errors.controller');
 
-exports.signup = function (req, res) {
+exports.register = function (req, res) {
   const user = new UserModel(req.body);
   user.provider = 'local';
 
@@ -45,10 +45,12 @@ exports.signin = function (req, res, next) {
     }
   })(req, res, next);
 };
+
 exports.signout = function (req, res) {
   req.logout();
   res.status(200).send('OK');
 };
+
 exports.me = function (req, res) {
   let safeUserObject = null;
   if (req.user) {
@@ -58,9 +60,7 @@ exports.me = function (req, res) {
       created_at: req.user.created_at.toString(),
     };
   }
-
   res.json(safeUserObject || null);
-
 };
 
 

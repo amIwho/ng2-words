@@ -1,14 +1,14 @@
-import { Ng2WordsPage } from './app.po';
+import {Ng2WordsPage} from './app.po';
 
-describe('ng2-words App', () => {
+describe('ng2-words App', function () {
   let page: Ng2WordsPage;
 
   beforeEach(() => {
     page = new Ng2WordsPage();
   });
 
-  it('should display welcome message', () => {
+    it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+        expect(page.getParagraphText()).toEqual('app works!');
   });
 });

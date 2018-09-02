@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  template: `
-    <div class="app container">
-      <router-outlet></router-outlet>
-    </div>
-  `,
-  styles: ['.app { height: 100%;}']
+    selector: 'app-root',
+    template: `
+        <div class="app container">
+            <router-outlet></router-outlet>
+        </div>
+    `,
+    styles: ['.app { height: 100%;}']
 })
-export class AppComponent {
-  title = 'app';
-}
+export class AppComponent implements OnInit {
+    title = 'app';
 
-//todo: implement /about page
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
+
+
+}
