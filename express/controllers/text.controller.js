@@ -1,6 +1,5 @@
 'use strict';
 
-const validator = require('validator');
 const moment = require('moment');
 const TextModel = require('../models/text');
 const errorHandler = require('./errors.controller');

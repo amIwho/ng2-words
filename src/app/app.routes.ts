@@ -7,8 +7,6 @@ import {AboutComponent} from './words-app/layout/about/about.component';
 const appRoutes: Routes = [
   {path: '', component: WordsAppComponent},
   {path: 'signin', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
-  {path: 'about', component: AboutComponent},
   {path: '**', redirectTo: ''}
 ];
 
